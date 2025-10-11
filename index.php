@@ -1,6 +1,10 @@
 ﻿<?php
 require_once 'PDO.php';
 $count = countAllDucks($pdo);
+// Nombre de canards cachés
+$stmt = $pdo->query("SELECT COUNT(*) FROM ducks WHERE etat = 'caché'");
+$count_hidden = $stmt->fetchColumn();
+
 $ducks = getAllDucks($pdo);
 ?>
 <!DOCTYPE html>
@@ -15,10 +19,16 @@ $ducks = getAllDucks($pdo);
   <h1>Hide and ducks</h1>
   <div class="grid">
       <?php foreach ($ducks as $duck): ?>
-          <div class="duck <?= htmlspecialchars($duck['place']) ?>">
-              <img src="media/duck.png" alt="Image de canard" class="duck-image" />
+          <div class="duck <?= htmlspecialchars($duck['place']) ?> <?= $duck['etat'] === 'trouvé' ? 'found' : '' ?>">
+              <div class="duck-image-container">
+                  <img src="media/duck.png" alt="Image de canard" class="duck-image" />
+                  <div class="duck-id"><?= htmlspecialchars($duck['id']) ?></div>
+                  <?php if ($duck['etat'] === 'trouvé'): ?>
+                      <img src="media/check.png" alt="Check" class="check-overlay" />
+                  <?php endif; ?>
+              </div>
               <strong><?= htmlspecialchars($duck['name']) ?></strong>
-              <br />
+              <br>
               <div class="tooltip-zone">
                   <span class="duck-tooltip-trigger" tabindex="0">&#9432;</span>
                   <div class="tooltip-content">
@@ -49,6 +59,31 @@ $ducks = getAllDucks($pdo);
       <?php endforeach; ?>
   </div>
 
+  <button id="toggleSidebar" class="sidebar-toggle">☰</button>
+
+  <aside id="sidebar" class="sidebar">
+      <h2>Légende des couleurs</h2>
+      <ul>
+          <li><span class="legend-color AGATHA"></span> Agatha</li>
+          <li><span class="legend-color MATTHIEU"></span> Matthieu</li>
+          <li><span class="legend-color ELIAS"></span> Elias</li>
+      </ul>
+
+      <h2>Statistiques</h2>
+      <p>Canards cachés : <strong><?= $count_hidden ?></strong></p>
+      <p>Nombre total : <strong><?= $count ?></strong></p>
+  </aside>
+
+
 
 </body>
+<script>
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+</script>
+
 </html>
