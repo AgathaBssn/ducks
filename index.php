@@ -24,6 +24,14 @@ $ducks = getAllDucks($pdo);
                   <div class="tooltip-content">
                       Vu pour la dernière fois : <?= htmlspecialchars($duck['last_found']) ?><br />
                       <form method="post" action="change_place.php">
+                          <!-- TOGGLE FOUND -->
+                          <label class="switch">
+                              <input type="checkbox" name="etat" value="trouvé" <?= $duck['etat'] === 'trouvé' ? 'checked' : '' ?>>
+                              <span class="slider"></span>
+                          </label>
+                          <label for="etat">Trouvé</label>
+
+                          <!-- CHANGE PLACE -->
                           <input type="hidden" name="duck_id" value="<?= htmlspecialchars($duck['id']) ?>" />
                           <label for="place_<?= htmlspecialchars($duck['id']) ?>">Changer la position :</label>
                           <select name="place" id="place_<?= htmlspecialchars($duck['id']) ?>">
