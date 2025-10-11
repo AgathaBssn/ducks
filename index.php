@@ -16,18 +16,18 @@ $ducks = getAllDucks($pdo);
   <p>Nombre de canards dans la base : <strong><?= htmlspecialchars($count) ?></strong></p>
 
   <h2>Liste des canards :</h2>
-
-  </head>
-  <body>
     <h1>Grille des 100 canards</h1>
-    <div class="grid">
-        <?php foreach ($ducks as $duck): ?>
+  <div class="grid">
+      <?php foreach ($ducks as $duck): ?>
           <div class="duck <?= htmlspecialchars($duck['place']) ?>">
-            <strong><?= htmlspecialchars($duck['name']) ?></strong>
-            Place: <?= htmlspecialchars($duck['place']) ?><br>
-            Vu le: <?= htmlspecialchars($duck['last_found']) ?>
+              <img src="media/duck.png" alt="Image de canard" class="duck-image">
+              <strong><?= htmlspecialchars($duck['name']) ?></strong>
+              <br>
+              Place: <?= htmlspecialchars($duck['place']) ?><br>
+              Vu le: <?= htmlspecialchars($duck['last_found']) ?>
           </div>
-        <?php endforeach; ?>
-      </div>
+      <?php endforeach; ?>
+  </div>
+
 </body>
 </html>
