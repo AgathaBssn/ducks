@@ -35,3 +35,36 @@ h1 {
 .AGATHA { background: #ffe6e6; }
 .MATTHIEU { background: #e6ffe6; }
 .ELIAS { background: #e6f0ff; }
+
+.tooltip-zone {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+    position: absolute;
+    z-index: 200;
+    left: 50%;
+    bottom: 120%;
+    margin-left: -115px;
+    width: 230px;
+    background-color: #222;
+    color: #fff;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+    pointer-events: auto; /* Essentiel pour interagir avec la bulle */
+}
+
+/* La bulle reste visible si on survole la zone déclencheur ou la bulle */
+.tooltip-zone:hover .tooltip-content,
+.tooltip-zone:focus-within .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+

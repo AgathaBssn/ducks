@@ -16,12 +16,31 @@ $ducks = getAllDucks($pdo);
   <div class="grid">
       <?php foreach ($ducks as $duck): ?>
           <div class="duck <?= htmlspecialchars($duck['place']) ?>">
-              <img src="media/duck.png" alt="Image de canard" class="duck-image">
+              <img src="media/duck.png" alt="Image de canard" class="duck-image" />
               <strong><?= htmlspecialchars($duck['name']) ?></strong>
-              <br>
+              <br />
+              <div class="tooltip-zone">
+                  <span class="duck-tooltip-trigger" tabindex="0">&#9432;</span>
+                  <div class="tooltip-content">
+                      Vu pour la dernière fois : <?= htmlspecialchars($duck['last_found']) ?><br />
+                      <form method="post" action="change_place.php">
+                          <input type="hidden" name="duck_id" value="<?= htmlspecialchars($duck['id']) ?>" />
+                          <label for="place_<?= htmlspecialchars($duck['id']) ?>">Changer la position :</label>
+                          <select name="place" id="place_<?= htmlspecialchars($duck['id']) ?>">
+                              <option value="AGATHA" <?= $duck['place'] === 'AGATHA' ? 'selected' : '' ?>>Agatha</option>
+                              <option value="MATTHIEU" <?= $duck['place'] === 'MATTHIEU' ? 'selected' : '' ?>>Matthieu</option>
+                              <option value="ELIAS" <?= $duck['place'] === 'ELIAS' ? 'selected' : '' ?>>Elias</option>
+                              <!-- autres places -->
+                          </select>
+                          <button type="submit">Valider</button>
+                      </form>
+                  </div>
+              </div>
           </div>
+
       <?php endforeach; ?>
   </div>
+
 
 </body>
 </html>
