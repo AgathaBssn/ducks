@@ -16,9 +16,9 @@ jobs:
       - name: Déployer via SFTP
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           port: 22
           source: "./"             # Tout le contenu du dépôt
-          target: "/path/to/www"   # Chemin cible sur ton hébergement, adapte-le !
+          target: "/path/to/https://ducks-race.agathabasson.fr/"   # Chemin cible sur ton hébergement, adapte-le !
