@@ -1,9 +1,9 @@
 ﻿<?php
 
-$host = 'db5018716797.hosting-data.io';
-$dbname = 'dbs14811708';
-$user = 'dbu1917480';
-$pass = 'canardsLeDrapeau2025!';
+$host = 'localhost';
+$dbname = 'ducks';
+$username = 'root';
+$password = '';
 $charset = 'utf8mb4';
 
 $options = [
@@ -15,7 +15,7 @@ $options = [
 try {
 
     $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO($dsn, $username, $password, $options);
 
 } catch (PDOException $e) {
     // Gestion des erreurs de connexion

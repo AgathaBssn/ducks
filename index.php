@@ -5,6 +5,9 @@ $count = countAllDucks($pdo);
 $stmt = $pdo->query("SELECT COUNT(*) FROM ducks WHERE etat = 'caché'");
 $count_hidden = $stmt->fetchColumn();
 
+$places = $pdo->query("SELECT * FROM places ORDER BY label ASC")->fetchAll(PDO::FETCH_ASSOC);
+
+
 $ducks = getAllDucks($pdo);
 ?>
 <!DOCTYPE html>
@@ -45,10 +48,11 @@ $ducks = getAllDucks($pdo);
                           <input type="hidden" name="duck_id" value="<?= htmlspecialchars($duck['id']) ?>" />
                           <label for="place_<?= htmlspecialchars($duck['id']) ?>">Changer la position :</label>
                           <select name="place" id="place_<?= htmlspecialchars($duck['id']) ?>">
-                              <option value="AGATHA" <?= $duck['place'] === 'AGATHA' ? 'selected' : '' ?>>Agatha</option>
-                              <option value="MATTHIEU" <?= $duck['place'] === 'MATTHIEU' ? 'selected' : '' ?>>Matthieu</option>
-                              <option value="ELIAS" <?= $duck['place'] === 'ELIAS' ? 'selected' : '' ?>>Elias</option>
-                              <!-- autres places -->
+                              <?php foreach ($places as $p): ?>
+                                  <option value="<?= htmlspecialchars($p['label']) ?>" <?= $duck['place'] === $p['label'] ? 'selected' : '' ?>>
+                                      <?= htmlspecialchars($p['label']) ?>
+                                  </option>
+                              <?php endforeach; ?>
                           </select>
                           <button type="submit">Valider</button>
                       </form>
@@ -72,6 +76,27 @@ $ducks = getAllDucks($pdo);
       <h2>Statistiques</h2>
       <p>Canards cachés : <strong><?= $count_hidden ?></strong></p>
       <p>Nombre total : <strong><?= $count ?></strong></p>
+
+      <h2>Lieux (<small>ajout/suppression</small>)</h2>
+      <!-- Formulaire d'ajout -->
+      <form method="POST" action="sidebar_place.php">
+          <input type="text" name="new_place" placeholder="Ajouter un lieu" required>
+          <button type="submit" name="action" value="add">+</button>
+      </form>
+      <!-- Liste des lieux -->
+      <ul>
+          <?php
+          $places = $pdo->query("SELECT * FROM places ORDER BY label")->fetchAll(PDO::FETCH_ASSOC);
+          foreach ($places as $place): ?>
+              <li>
+                  <?= htmlspecialchars($place['label']) ?>
+                  <form method="POST" action="sidebar_place.php" style="display:inline">
+                      <input type="hidden" name="delete_place_id" value="<?= $place['id'] ?>">
+                      <button type="submit" name="action" value="delete" style="color:red;border:none;background:transparent;font-weight:bold;cursor:pointer;">×</button>
+                  </form>
+              </li>
+          <?php endforeach; ?>
+      </ul>
   </aside>
 
 

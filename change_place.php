@@ -1,15 +1,17 @@
 <?php
 require_once 'PDO.php';
 
-if (isset($_POST['duck_id']) && isset($_POST['place'])) {
+if (isset($_POST['duck_id'], $_POST['place'])) {
     $duck_id = intval($_POST['duck_id']);
     $new_place = $_POST['place'];
-    // Récupérer l’état, par défaut 'caché' si non défini
-    $new_etat = isset($_POST['etat']) && $_POST['etat'] === 'trouvé' ? 'trouvé' : 'caché';
+    $new_etat = (isset($_POST['etat']) && $_POST['etat'] === 'trouvé') ? 'trouvé' : 'caché';
 
-    // Valide que la place est autorisée
-    $allowed_places = ['AGATHA', 'MATTHIEU', 'ELIAS'];
-    if (!in_array($new_place, $allowed_places)) {
+    // Vérifie si la place existe dans la table places
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM places WHERE label = :label");
+    $stmt->execute([':label' => $new_place]);
+    $place_exists = $stmt->fetchColumn();
+
+    if (!$place_exists) {
         die('Place non autorisée.');
     }
 
@@ -21,7 +23,6 @@ if (isset($_POST['duck_id']) && isset($_POST['place'])) {
         ':id' => $duck_id
     ]);
 
-    // Redirige vers la page principale
     header('Location: index.php');
     exit;
 } else {
