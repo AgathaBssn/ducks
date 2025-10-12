@@ -1,0 +1,24 @@
+name: Déploiement sur IONOS via SFTP
+
+on:
+  push:
+    branches:
+      - main  # adapte selon ta branche principale
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Déployer via SFTP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: 22
+          source: "./"             # Tout le contenu du dépôt
+          target: "/path/to/www"   # Chemin cible sur ton hébergement, adapte-le !
