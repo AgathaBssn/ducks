@@ -21,4 +21,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
           source: "./"             # Tout le contenu du dépôt
-          target: "/ducks"   # Chemin cible sur ton hébergement, adapte-le !
+          target: "/ducks"
+          skip-cleanup: true
