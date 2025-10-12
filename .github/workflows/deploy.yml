@@ -22,4 +22,3 @@ jobs:
           port: 22
           source: "./"             # Tout le contenu du dépôt
           target: "/ducks"
-          skip-cleanup: true
