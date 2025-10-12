@@ -1,9 +1,9 @@
 ﻿<?php
 
-$host = 'localhost';
-$dbname = 'ducks';
-$username = 'root';
-$password = '';
+$host = 'db5018716797.hosting-data.io';
+$dbname = 'dbs14811708'; 
+$user = 'dbu1917480';    
+$pass = 'canardsLeDrapeau2025!'; 
 $charset = 'utf8mb4';
 
 $options = [
