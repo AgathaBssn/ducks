@@ -1,4 +1,9 @@
 <?php
+ob_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'PDO.php';
 
 if (isset($_POST['duck_id'], $_POST['place'])) {
@@ -24,6 +29,7 @@ if (isset($_POST['duck_id'], $_POST['place'])) {
     ]);
 
     header('Location: index.php');
+    ob_end_flush();
     exit;
 } else {
     die('Données manquantes.');
