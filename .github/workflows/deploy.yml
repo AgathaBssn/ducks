@@ -21,4 +21,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
           source: "./"             # Tout le contenu du dépôt
-          target: "/path/to/https://ducks-race.agathabasson.fr/"   # Chemin cible sur ton hébergement, adapte-le !
+          target: "/ducks"   # Chemin cible sur ton hébergement, adapte-le !
