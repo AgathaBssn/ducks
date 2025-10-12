@@ -15,7 +15,7 @@ $options = [
 try {
 
     $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-    $pdo = new PDO($dsn, $username, $password, $options);
+    $pdo = new PDO($dsn, $user, $pass, $options);
 
 } catch (PDOException $e) {
     // Gestion des erreurs de connexion
